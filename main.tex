@@ -1,0 +1,35 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[margin=2cm]{geometry} % Adjust the margins
+\usepackage{amsmath}
+
+\title{MDCS Formulary}
+\author{Gregorio Valenti}
+\date{}
+
+\begin{document}
+
+\section{Consider the Feedback Control System below:}
+\hspace{1cm}
+\includegraphics[scale=0.5]{feedback_control_system.png}
+
+\section{Formulary:}
+\begin{enumerate}
+\item[$\bullet$] $K_d = \frac{1}{G_f G_s}$
+
+\item[$\bullet$] $\left| e_r^\infty \right| = \left| \displaystyle\lim_{s\to0} s \cdot \frac{K_d}{1+L(s)} \cdot \frac{R_0}{s^{h+1}} \right| = \left| \displaystyle\lim_{s\to0} \frac{s^{\nu+p}K_d^2}{s^{\nu+p}K_d+K_cK_pG_a}  \cdot \frac{R_0}{s^{h}} \right|$
+
+\item[$\bullet$] $\left| e_{da}^\infty \right| = \left| \displaystyle\lim_{s\to0} s \cdot \frac{G_p(s)}{1+L(s)} \cdot \frac{D_{a0}}{s^{h+1}} \right| = \left| \displaystyle\lim_{s\to0} \frac{s^{\nu}K_dK_p}{s^{\nu+p}K_d+K_cK_pG_a}  \cdot \frac{D_{a0}}{s^{h}} \right|$
+
+\item[$\bullet$] $\left| e_{dp}^\infty \right| = \left| \displaystyle\lim_{s\to0} s \cdot \frac{1}{1+L(s)} \cdot \frac{D_{p0}}{s^{h+1}} \right| = \left| \displaystyle\lim_{s\to0} \frac{s^{\nu+p}K_d}{s^{\nu+p}K_d+K_cK_pG_a}  \cdot \frac{D_{p0}}{s^{h}} \right|$
+
+\item[$\bullet$] $\left| e_{dp}^\infty \right| = \left| 
+\frac{1}{1+L(j\omega_p)} \cdot a_p sin\left(\omega_pt\right) \right| < \rho \to \left| a_p \right| \cdot \left| S(j\omega_p) \right| < \rho \to
+M_S^{LF} = \frac{\rho}{\left| a_p \right|}$ \\
+$(M_S^{LF})_{dB} + 40 \log \left( \frac{\omega_S^-}{\omega_H} \right) = 0
+\to \omega_L = \omega_p^+ \cdot 10^{\frac{-(M_S^{LF})_{dB}}{40}}; \quad
+\omega_c \geq 2\omega_L$
+
+\end{enumerate}
+
+\end{document}
