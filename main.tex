@@ -8,28 +8,84 @@
 \date{}
 
 \begin{document}
+	
+	\section{Consider the Feedback Control System below:}
+	\hspace{1cm}
+	\includegraphics[scale=0.5]{feedback_control_system.png}
+	
+	\section{Formulary:}
+	\begin{enumerate}
+		\item[$\bullet$] $K_d = \frac{1}{G_f G_s}$
+		
+		\item[$\bullet$] $\left| e_r^\infty \right| = \left| \displaystyle\lim_{s\to0} s \cdot \frac{K_d}{1+L(s)} \cdot \frac{R_0}{s^{h+1}} \right| = \left| \displaystyle\lim_{s\to0} \frac{s^{\nu+p}K_d^2}{s^{\nu+p}K_d+K_cK_pG_a}  \cdot \frac{R_0}{s^{h}} \right|$
+		
+		\item[$\bullet$] $\left| e_{da}^\infty \right| = \left| \displaystyle\lim_{s\to0} s \cdot \frac{G_p(s)}{1+L(s)} \cdot \frac{D_{a0}}{s^{h+1}} \right| = \left| \displaystyle\lim_{s\to0} \frac{s^{\nu}K_dK_p}{s^{\nu+p}K_d+K_cK_pG_a}  \cdot \frac{D_{a0}}{s^{h}} \right|$
+		
+		\item[$\bullet$] $\left| e_{dp}^\infty \right| = \left| \displaystyle\lim_{s\to0} s \cdot \frac{1}{1+L(s)} \cdot \frac{D_{p0}}{s^{h+1}} \right| = \left| \displaystyle\lim_{s\to0} \frac{s^{\nu+p}K_d}{s^{\nu+p}K_d+K_cK_pG_a}  \cdot \frac{D_{p0}}{s^{h}} \right|$
+		
+		\item[$\bullet$] $\left| e_{dp}^\infty \right| = \left| 
+		\frac{1}{1+L(j\omega_p)} \cdot a_p sin\left(\omega_pt\right) \right| < \rho \to \left| a_p \right| \cdot \left| S(j\omega_p) \right| < \rho \to
+		M_S^{LF} = \frac{\rho}{\left| a_p \right|}$ \\
+		$ \Rightarrow (M_S^{LF})_{dB} + 40 \log \left( \frac{\omega_L}{\omega_p^+} \right) = 0
+		\to \omega_L = \omega_p^+ \cdot 10^{\frac{-(M_S^{LF})_{dB}}{40}}; \quad
+		\omega_c \geq 2\omega_L$
+		
+		\item[$\bullet$] $\left| e_{ds}^\infty \right| = \left| 
+		\frac{L(j\omega_s)}{1+L(j\omega_s)} \cdot \frac{1}{G_s} \cdot a_s sin\left(\omega_st\right) \right| < \rho \to \left| a_s \right| \cdot \left| T(j\omega_s) \cdot \frac{1}{G_s} \right| < \rho \to
+		M_T^{HF} = \frac{\rho G_s}{\left| a_s \right|}$ \\
+		$ \Rightarrow 0 - 40 \log \left( \frac{\omega_s^-}{\omega_H} \right) = (M_T^{HF})_{dB} \to \omega_H = \omega_s^- \cdot 10^{\frac{(M_T^{HF})_{dB}}{40}}; \quad
+		\omega_c \leq \frac{\omega_H}{2}$
+		
+		\item[$\bullet$] $ \zeta = \frac{\left| \log (\hat{s}) \right|}{\sqrt{\pi^2 + \log^2 (\hat{s})}}; \quad 
+		T_p = \frac{1}{2\zeta \sqrt{1-\zeta^2}}; \quad
+		S_p = \frac{2\zeta \sqrt{2+4\zeta^2+2\sqrt{1+8\zeta^2}}}{\sqrt{1+8\zeta^2}+4\zeta^2-1}$
+		
+		\item[$\bullet$] $ \omega_{c,tr} = \frac{1}{t_r\sqrt{1-\zeta^2}} \cdot
+		(\pi - acos(\zeta)) \cdot \sqrt{\sqrt{1+4\zeta^4}-2\zeta^2}; \quad
+		\omega_{c,t,s\alpha \%} = \frac{\log(\frac{100}{\alpha})}{t_{s,\alpha \%}\zeta} \cdot \sqrt{\sqrt{1+4\zeta^4}-2\zeta^2} $
+		
+	\end{enumerate}
+	\newpage
+	\section{Controller Design:}
+	\begin{enumerate}
+		\item[$\bullet$] $ G_c = \frac{K_c}{s^\nu}; \quad
+		L_{in} = \frac{K_c}{s^\nu} \cdot G_pG_aG_sG_f $
+		
+		\item[$\bullet$] Zero Network: $ R_z = 1 + \frac{s}{z}; \quad
+		z = \frac{w_{c,des}}{w_{norm,R_z}} $
+		
+		\item[$\bullet$] Lead Network: $ R_d = \frac{1 + \frac{s}{z_d}}{1 + \frac{s}{m_dz_d}}; \quad
+		z_d = \frac{w_{c,des}}{w_{norm,R_d}} $
+		
+		\item[$\bullet$] Lag Network: $ R_d = \frac{1 + \frac{s}{m_ip_i}}{1 + \frac{s}{p_i}}; \quad
+		m_i = 10^{\frac{-\alpha}{20}}; \quad
+		p_i = \frac{w_{c,des}}{w_{norm,R_i}} $
+		
+	\end{enumerate}
+	
+	\begin{figure}[htbp]
+		\centering
+		% First minipage for the first image
+		\begin{minipage}{0.45\textwidth} % Adjust the width as needed
+			\centering
+			\includegraphics[width=\linewidth]{constraints_ds.png} % Replace with your image file
+			\caption{Caption for Image 1}
+			\label{fig:image1}
+		\end{minipage}
+		\hfill % Adds horizontal space between the images
+		% Vertical line
+		\vrule width 0.5pt % Adjust the width of the line as needed
+		\hfill % Adds horizontal space before the second image
+		% Second minipage for the second image
+		\begin{minipage}{0.45\textwidth} % Adjust the width as needed
+			\centering
+			\includegraphics[width=\linewidth]{constraints_dp.png} % Replace with your image file
+			\caption{Caption for Image 2}
+			\label{fig:image2}
+		\end{minipage}
+	\end{figure}
+	
+\end{document}
 
-\section{Consider the Feedback Control System below:}
-\hspace{1cm}
-\includegraphics[scale=0.5]{feedback_control_system.png}
-
-\section{Formulary:}
-\begin{enumerate}
-\item[$\bullet$] $K_d = \frac{1}{G_f G_s}$
-
-\item[$\bullet$] $\left| e_r^\infty \right| = \left| \displaystyle\lim_{s\to0} s \cdot \frac{K_d}{1+L(s)} \cdot \frac{R_0}{s^{h+1}} \right| = \left| \displaystyle\lim_{s\to0} \frac{s^{\nu+p}K_d^2}{s^{\nu+p}K_d+K_cK_pG_a}  \cdot \frac{R_0}{s^{h}} \right|$
-
-\item[$\bullet$] $\left| e_{da}^\infty \right| = \left| \displaystyle\lim_{s\to0} s \cdot \frac{G_p(s)}{1+L(s)} \cdot \frac{D_{a0}}{s^{h+1}} \right| = \left| \displaystyle\lim_{s\to0} \frac{s^{\nu}K_dK_p}{s^{\nu+p}K_d+K_cK_pG_a}  \cdot \frac{D_{a0}}{s^{h}} \right|$
-
-\item[$\bullet$] $\left| e_{dp}^\infty \right| = \left| \displaystyle\lim_{s\to0} s \cdot \frac{1}{1+L(s)} \cdot \frac{D_{p0}}{s^{h+1}} \right| = \left| \displaystyle\lim_{s\to0} \frac{s^{\nu+p}K_d}{s^{\nu+p}K_d+K_cK_pG_a}  \cdot \frac{D_{p0}}{s^{h}} \right|$
-
-\item[$\bullet$] $\left| e_{dp}^\infty \right| = \left| 
-\frac{1}{1+L(j\omega_p)} \cdot a_p sin\left(\omega_pt\right) \right| < \rho \to \left| a_p \right| \cdot \left| S(j\omega_p) \right| < \rho \to
-M_S^{LF} = \frac{\rho}{\left| a_p \right|}$ \\
-$(M_S^{LF})_{dB} + 40 \log \left( \frac{\omega_S^-}{\omega_H} \right) = 0
-\to \omega_L = \omega_p^+ \cdot 10^{\frac{-(M_S^{LF})_{dB}}{40}}; \quad
-\omega_c \geq 2\omega_L$
-
-\end{enumerate}
 
 \end{document}
