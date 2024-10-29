@@ -1,2 +1,2 @@
 # MDCS_Notes
- Notes for the course Modern Design of Control Systems
+This repository contains a formulary for the course on Automatic Control, and notes for the current course of Modern Design of Control Systems.
