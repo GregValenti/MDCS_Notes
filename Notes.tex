@@ -5,6 +5,7 @@
 \usepackage{amssymb}
 \numberwithin{equation}{subsection}
 \usepackage{float}
+\usepackage{bm}
 
 \title{MDCS Notes}
 \author{Gregorio Valenti}
@@ -21,14 +22,14 @@
 
 	With the following characteristics:
 	\begin{enumerate}
-		\item[$\bullet$] Plant $G_p$ with disturbance $d_p$
-		\item[$\bullet$] Actuator $G_a$ with disturbance $d_a$
-		\item[$\bullet$] Sensor $G_s$ with disturbance $d_s$
-		\item[$\bullet$] Feedback Controller $G_c$ 	
+		\item[$\bullet$] \textbf{Plant} $G_p$ with disturbance $d_p$
+		\item[$\bullet$] \textbf{Actuator} $G_a$ with disturbance $d_a$
+		\item[$\bullet$] \textbf{Sensor} $G_s$ with disturbance $d_s$
+		\item[$\bullet$] \textbf{Feedback Controller} $G_c$ 	
 	\end{enumerate}
 	
 	\section{Step response of prototype $\boldmath{2}^{\textbf{nd}}$ order system}
-	For a prototype second order system with Sensitivity and Complementary sensitivity functions of the form:
+	For a prototype second order system with \textbf{Sensitivity} and \textbf{Complementary sensitivity} functions of the form:
 	\begin{equation}
 		T(s) = \dfrac{1}{1+\dfrac{2\zeta}{\omega_n}s+\dfrac{s^2}{\omega_n^2}} \quad ; \quad S(s) = \dfrac{s\left(\dfrac{2\zeta}{\omega_n}+\dfrac{s}{\omega_n^2}\right)}{1+\dfrac{2\zeta}{\omega_n}s+\dfrac{s^2}{\omega_n^2}}
 	\end{equation}
@@ -47,11 +48,11 @@
 	Therefore, by first writing $S(s) = s^{\nu+p}S^*(s)$, we can apply the final value theorem to each expression as described in the following subsections.
 	\subsection{Tracking Error}
 	\subsubsection{Problem formulation}
-	The tracking error is defined as:
+	The \textbf{tracking error} is defined as:
 	\begin{equation}
 		e_r(t) = y_d(t)-y_r(t) = K_dr(t)-y_r(t)
 	\end{equation}
-	Applying the final value theorem leads to:
+	Applying the \textbf{final value theorem} leads to:
 	\begin{align}
 		\left| e_r^\infty \right| &= \displaystyle\lim_{t\to\infty} 	\left|e_r(t)\right| = \displaystyle\lim_{s\to0}s \left|e_r(s)\right| = \displaystyle\lim_{s\to0}s \left|K_dr(s)-y_r(s)\right| = \nonumber \\
 		&= \displaystyle\lim_{s\to0}s \left|G_{re}(s)r(s)\right| = 	\displaystyle\lim_{s\to0}s \left|S(s)K_dr(s)\right| = \nonumber \\
@@ -72,15 +73,15 @@
 		\end{equation}
 	\end{enumerate}
 	
-	\subsection{Error due to Generic Polynomial Disturbances $\boldsymbol{d(t)}$}
+	\subsection{Error due to Generic Polynomial Disturbances $\bm{d(t)}$}
 	\subsubsection{Problem formulation}
-	The output error due to the generic disturbance $d(t)$ is the contribution of the disturbance to the output $y(t)$:
+	The \textbf{output error} due to the generic disturbance $d(t)$ is the contribution of the disturbance to the output $y(t)$:
 	\begin{equation}
 		e_d(t) = y_d(t)
 	\end{equation}
 	
-	\subsubsection{Polynomial disturbance $\boldsymbol{d_a(t)}$}
-	Applying the final value theorem leads to:
+	\subsubsection{Polynomial disturbance $\bm{d_a(t)}$}
+	Applying the \textbf{final value theorem} leads to:
 	\begin{align}
 		\left| e_{d_a}^\infty \right| &= \displaystyle\lim_{t\to\infty} 	\left|e_{d_a}(t)\right| = \displaystyle\lim_{s\to0}s \left|e_{d_a}(s)\right| = \displaystyle\lim_{s\to0}s \left|y_{d_a}(s)\right| = \displaystyle\lim_{s\to0}s \left| S(s)G_p(s)d_a(s) \right| = \nonumber \\
 		&= \displaystyle\lim_{s\to0} 	\left|s^{\nu+p+1}S^*(s)G_p(s)\dfrac{D_{a0}}{s^{h+1}}\right| = \displaystyle\lim_{s\to0} \left|s^{\nu+1}S^*(s)K_p\dfrac{D_{a0}}{s^{h+1}}\right| =
@@ -98,8 +99,8 @@
 		\end{equation}
 	\end{enumerate}
 	
-	\subsubsection{Polynomial disturbance $\boldsymbol{d_p(t)}$}
-	Applying the final value theorem leads to:
+	\subsubsection{Polynomial disturbance $\bm{d_p(t)}$}
+	Applying the \textbf{final value theorem} leads to:
 	\begin{align}
 		\left| e_{d_p}^\infty \right| &= \displaystyle\lim_{t\to\infty} 	\left|e_{d_p}(t)\right| = \displaystyle\lim_{s\to0}s \left|e_{d_p}(s)\right| = \displaystyle\lim_{s\to0}s \left|y_{d_p}(s)\right| = \displaystyle\lim_{s\to0}s \left| S(s)d_p(s) \right| = \nonumber \\
 		&= \displaystyle\lim_{s\to0}	\left|s^{\nu+p+1}S^*(s)\dfrac{D_{p0}}{s^{h+1}}\right| =
@@ -118,7 +119,7 @@
 	\end{enumerate}
 	
 	\section{Steady-state Response to Sinusoidal Disturbances}
-	\subsection{Output disturbance $\boldsymbol{d_p(t)}$}
+	\subsection{Output disturbance $\bm{d_p(t)}$}
 	The focus is on the class of sinusoidal signals of the following type:
 	\begin{equation}
 		d_p = a_p\sin(\omega_pt) \quad \forall\omega_p\leq\omega_p^+ \quad \text{given } a_p \text{ and } w_p^+
@@ -127,13 +128,13 @@
 	\begin{equation}
 		\left| e_{d_p}^\infty \right| = \left| y_{d_p}^\infty \right| \leq \rho_p \quad \text{with } \rho_p>0
 	\end{equation}
-	The specification leads to a frequency domain constraint on the Sensitivity function $S(s)$ which can be computed as follows:
+	The specification leads to a \textbf{frequency domain constraint} on the Sensitivity function $S(s)$ which can be computed as follows:
 	\begin{align}
 		\left| e_{d_p}^\infty \right| &= \left| y_{d_p}^\infty \right| = \left| a_pS(j\omega_p)\sin(\omega_pt+\varphi_p) \right| \leq a_p\left|S(j\omega_p)\right| \leq \rho_p \nonumber \\
 		&\implies \left|S(j\omega_p)\right| \leq \dfrac{\rho_p}{a_p} = M_S^{LF} \quad \forall\omega_p \leq \omega_p^+
 	\end{align}
 	
-	\subsection{Sensor Noise $\boldsymbol{d_s(t)}$}
+	\subsection{Sensor Noise $\bm{d_s(t)}$}
 	The focus is on the class of sinusoidal signals of the following type:
 	\begin{equation}
 		d_s = a_s\sin(\omega_st) \quad \forall\omega_s\geq\omega_s^- \quad \text{given } a_s \text{ and } w_s^-
@@ -142,7 +143,7 @@
 	\begin{equation}
 		\left| e_{d_s}^\infty \right| = \left| y_{d_s}^\infty \right| \leq \rho_s \quad \text{with } \rho_s>0
 	\end{equation}
-	The specification leads to a frequency domain constraint on the Complementary Sensitivity function $T(s)$ which can be computed as follows:
+	The specification leads to a \textbf{frequency domain constraint} on the Complementary Sensitivity function $T(s)$ which can be computed as follows:
 	\begin{align}
 		\left| e_{d_s}^\infty \right| &= \left| y_{d_s}^\infty \right| = \left| a_sT(j\omega_s)\dfrac{1}{G_s}\sin(\omega_st+\varphi_s) \right| \leq a_s\left|T(j\omega_s)\dfrac{1}{G_s}\right| \leq \rho_s \nonumber \\
 		&\implies \left|T(j\omega_s)\right| \leq \dfrac{\rho_sG_s}{a_s} = M_T^{HF} \quad \forall\omega_s \leq \omega_s^-
@@ -154,7 +155,7 @@
 	\begin{enumerate}
 		\item[$\bullet$] Rational functions of the Laplace variable s are used to approximate the frequency domain constraints on $S(s)$ and $T(s)$.
 		\item[$\bullet$] The parameters of the approximating functions (steady-state gain zeros and poles) can be moved to get the desired result.
-		\item[$\bullet$] Butterworth polynomials can be used either as denominator or numerator of the approximating rational function to effectively retain constraints on different frequency ranges.
+		\item[$\bullet$] \textbf{Butterworth polynomials} can be used either as denominator or numerator of the approximating rational function to effectively retain constraints on different frequency ranges.
 	\end{enumerate}
 	\begin{table}[H] % Use [H] to fix position
 		\begin{minipage}{0.45\textwidth} % Adjust width as needed
@@ -174,10 +175,10 @@
 		\begin{minipage}{0.5\textwidth}
 			\raggedright
 			\vspace{-54pt}
-			The key property of Butterworth polynomials is that, when used in the numerator or denominator of a rational function, they increase or decrease the frequency response magnitude by 3 dB respectively, at the frequency $\omega_a$, regardless of the polynomial's order.
+			The \textbf{key property} of Butterworth polynomials is that, when used in the numerator or denominator of a rational function, they increase or decrease the frequency response magnitude by 3 dB respectively, at the frequency $\omega_a$, regardless of the polynomial's order.
 		\end{minipage}
 	\end{table}
-	The goal is to obtain the rational functions $W_S^{-1}(s)$ and $W_T^{-1}(s)$ such that the constraints derived above are satisfied.
+	The goal is to obtain the \textbf{rational functions} $\bm{W_S^{-1}(s)}$ \textbf{and} $\bm{W_T^{-1}(s)}$ such that the constraints derived above are satisfied.
 	\begin{enumerate}
 		\item[$\bullet$] Considering low frequencies we have:
 		\begin{equation}
@@ -210,8 +211,8 @@
 		\end{minipage}
 	\end{figure}
 	
-	\section{Performance Specification as $\boldsymbol{H_\infty}$ Norm Constraints}
-	\subsection{$\boldsymbol{H_\infty}$ Norm Definition}
+	\section{Performance Specification as $\bm{H_\infty}$ Norm Constraints}
+	\subsection{$\bm{H_\infty}$ Norm Definition}
 	By defining:
 	\begin{enumerate}
 		\item[$\bullet$] $W_S(s)$ as the inverse of the rational approximation of the frequency domain constraints on the Sensitivity function S(s)
@@ -221,7 +222,7 @@
 	\begin{equation}
 		\left| W_S(j\omega)S(j\omega) \right| \leq 1 \quad ; \quad \left| W_T(j\omega)T(j\omega) \right| \leq 1 \quad \forall\omega	
 	\end{equation}
-	The $H_\infty$ norm of a SISO LTI system with transfer function $H(s)$ is defined as:
+	The $\bm{H_\infty}$ \textbf{norm} of a SISO LTI system with transfer function $H(s)$ is defined as:
 	\begin{equation}
 		\left\lVert H(s) \right\rVert_\infty \triangleq \max_\omega \left| H(j\omega) \right|
 	\end{equation}
@@ -229,6 +230,106 @@
 	\begin{equation}
 		\left\lVert W_S(s)S(s) \right\rVert_\infty \leq 1 \quad ; \quad \left\lVert W_T(s)T(s) \right\rVert_\infty \leq 1
 	\end{equation}
+
+	\section{Unstructured Uncertainty Modelling}
+	Mathematical models cannot exactly describe a physical process, irrespective of their complexity. Thus, model uncertainty has to be taken into account when a mathematical model is used to analyse the behaviour of a system, or to design a feedback control system.
+	\textbf{Unstructured uncertainty} comes into play when complete ignorance regarding the order and the phase behaviour of the system is assumed, and parametric uncertainty can also be described by means of unstructured model sets.
+	\subsection{Uncertainty Model Sets}
+	The following four uncertainty model sets will be considered, in which:
+	\begin{enumerate}
+		\item[$\bullet$] $G_p(s) $ is the transfer function of the generic member of the uncertainty set. 
+		\item[$\bullet$] $G_{pn}(s)$ is the transfer function of the \textbf{nominal model}.
+		\item[$\bullet$] $\Delta(s)$ represents any possible transfer function whose $H_\infty$ norm is less than 1.
+		\item[$\bullet$] $W_u(s)$ is a \textbf{weighting function} which accounts for the size of the uncertainty.
+	\end{enumerate} 
+	Particular focus will be on the second set.
+	\subsubsection{Additive Uncertainty}
+	The additive uncertainty model set is defined as:
+	
+	\begin{equation}
+		M_a = \left\{ G_p(s): G_p(s)=G_{pn}(s)+W_u(s)\Delta(s), \left\lVert\Delta(s)\right\rVert_\infty \leq1 \right\}
+	\end{equation}
+	where, by construction, the following condition must be satisfied by the weighting function $W_u(s)$:
+	\begin{equation}
+		\left\lVert \dfrac{G_p(s)-G_{pn}(s)}{W_u(s)} \right\rVert_\infty = \left\lVert \Delta(s) \right\rVert_\infty \leq 1
+	\end{equation}
+	which is equivalent to:
+	\begin{equation}
+		\left| G_p(j\omega)-G_{pn}(j\omega) \right| \leq \left| W_u(j\omega) \right| \quad \forall \omega
+	\end{equation}
+	
+	Below is an example of the frequency response of $W_u(j\omega)$ for an additive uncertainty model set:
+	
+	\centering
+	\includegraphics[width=0.6\textwidth]{images/additive_uncertainty.png}
+	\label{fig:image3}
+	
+	\raggedright
+	\subsubsection{Multiplicative Uncertainty}
+	The multiplicative uncertainty model set is defined as:
+	\begin{equation}
+		M_m = \left\{ G_p(s): G_p(s)=G_{pn}(s) \left[1+W_u(s)\Delta(s)\right], \left\lVert\Delta(s)\right\rVert_\infty \leq1 \right\}
+	\end{equation}
+	where, by construction, the following condition must be satisfied by the weighting function $W_u(s)$:
+	\begin{equation}
+		\left\lVert \left( \dfrac{G_p(s)}{G_{pn}(s)}-1 \right) \dfrac{1}{W_u(s)}\right\rVert_\infty = \left\lVert \Delta(s) \right\rVert_\infty \leq 1
+	\end{equation}
+	which is equivalent to:
+	\begin{equation}
+		\left| \dfrac{G_p(j\omega)}{G_{pn}(j\omega)}-1 \right| \leq \left| W_u(j\omega) \right| \quad \forall \omega
+	\end{equation}
+	
+	Below is an example of the frequency response of $W_u(j\omega)$ for a multiplicative uncertainty model set:
+	
+	\centering
+	\includegraphics[width=0.68\textwidth]{images/multiplicative_uncertainty.png}
+	\label{fig:image4}
+	
+	\raggedright
+	Now we consider the problem of properly selecting the \textbf{nominal model} $\bm{G_{pn}}$ in order to \textbf{minimize} the size $W_u$ of the unstructured uncertainty of the given model:
+	Let's consider, without loss of generality, the following nominal model:
+	\begin{equation}
+		G_{pn}(s) = \dfrac{K_n}{s-p}
+	\end{equation}
+	where $K_n$ is a constant value to be computed.
+	The weighting function $W_u(s)$ must satisfy the following condition:
+	\begin{equation}
+		\left\lVert \Delta(s) \right\rVert_\infty = \sup_\omega \left| \left( \dfrac{G_p(j\omega)}{G_{pn}(j\omega)}-1 \right) \dfrac{1}{W_u(j\omega)} \right| \leq 1
+	\end{equation}
+	which is equivalent to:
+	\begin{equation}
+		\left| W_u(j\omega) \right| \geq \left| \dfrac{G_p(j\omega)}{G_{pn}(j\omega)}-1 \right| = \left| \dfrac{K}{K_n}-1 \right| \quad \forall\omega,\;\forall K 
+	\end{equation}
+	$K_n$ can be selected in order to minimize the size of the uncertainty in the following way:
+	\begin{equation}
+		\left| W_u(j\omega) \right| \geq \min_{K_n}\max_K \left| \dfrac{K}{K_n}-1 \right| \quad \forall\omega
+	\end{equation}
+	It can be easily shown that:
+	\begin{equation}
+		\min_{K_n}\max_K \left| \dfrac{K}{K_n}-1 \right| = \min_{K_n}\max \left\{\ \left| \dfrac{\overline{K}-K_n}{K_n} \right|, \left| \dfrac{\underline{K}-K_n}{K_n} \right| \right\}
+	\end{equation}
+	The solution is found at the intersection of the two functions to maximise (between curly braces in 7.1.11), and it is the following:
+	\begin{equation}
+		K_n = \dfrac{\overline{K}+\underline{K}}{2}
+	\end{equation}
+	
+	\subsubsection{Inverse Additive Uncertainty}
+	The inverse additive uncertainty model set is defined as:
+	\begin{equation}
+		M_{ia} = \left\{ G_p(s): G_p(s)= \dfrac{G_{pn}(s)}{1+W_u(s)\Delta(s)G_{pn}(s)}, \left\lVert\Delta(s)\right\rVert_\infty \leq1 \right\}
+	\end{equation}
+	\subsubsection{Inverse Multiplicative Uncertainty}
+	The inverse multiplicative uncertainty model set is defined as:
+	\begin{equation}
+		M_{im} = \left\{ G_p(s): G_p(s)= \dfrac{G_{pn}(s)}{1+W_u(s)\Delta(s)}, \left\lVert\Delta(s)\right\rVert_\infty \leq1 \right\}
+	\end{equation}
+	
+	\subsection{Conclusion and Remarks}
+	An important remark is that \textbf{unstructured uncertainty model sets can only provide a conservative description of parametric uncertainties} since, as shown in the above example, a complex function $\Delta(s)$ is used to account for the source of uncertainty, which is a real number.
+	The unstructured uncertainty model set describes, at each frequency $\omega$, the uncertainty as a disk of radius $\left| W_u(j\omega)L_n(j\omega) \right|$.
+	
+	\section{Robust Stability}
+	
 	
 	
 \end{document}
