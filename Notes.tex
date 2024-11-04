@@ -56,10 +56,10 @@
 	\begin{align}
 		\left| e_r^\infty \right| &= \displaystyle\lim_{t\to\infty} 	\left|e_r(t)\right| = \displaystyle\lim_{s\to0}s \left|e_r(s)\right| = \displaystyle\lim_{s\to0}s \left|K_dr(s)-y_r(s)\right| = \nonumber \\
 		&= \displaystyle\lim_{s\to0}s \left|G_{re}(s)r(s)\right| = 	\displaystyle\lim_{s\to0}s \left|S(s)K_dr(s)\right| = \nonumber \\
-		&= \displaystyle\lim_{s\to0}s 	\left|s^{\nu+p}S^*(s)K_d\dfrac{R_0}{s^{h+1}}\right| =
+		&= \displaystyle\lim_{s\to0}s 	\left|s^{\nu+p}S^*(s)K_d\dfrac{h!R_0}{s^{h+1}}\right| =
 		\begin{cases}
 			0, & \text{if } \nu+p>h \\
-			\left|S^*(0)K_dR_0\right|, & \text{if } \nu+p = h
+			\left|S^*(0)K_dh!R_0\right|, & \text{if } \nu+p = h
 		\end{cases}
 	\end{align}
 	The given system type is then $\nu+p$.
@@ -69,7 +69,7 @@
 		\item[$\bullet$] case $\rho_r=0 \implies S(s)$ must have a zero at $s=0$ with multiplicity greater than $h \implies$ We have no constraint on $\left|S^*(0)\right| $ 
 		\item[$\bullet$] case $\rho_r>0 \implies S(s)$ must have a zero at $s=0$ with multiplicity $h \implies$ We have the following constraint:
 		\begin{equation}
-			\left|S^*(0)\right| \leq \dfrac{\rho_r}{K_dR_0}	
+			\left|S^*(0)\right| \leq \dfrac{\rho_r}{K_dh!R_0}	
 		\end{equation}
 	\end{enumerate}
 	
@@ -84,10 +84,10 @@
 	Applying the \textbf{final value theorem} leads to:
 	\begin{align}
 		\left| e_{d_a}^\infty \right| &= \displaystyle\lim_{t\to\infty} 	\left|e_{d_a}(t)\right| = \displaystyle\lim_{s\to0}s \left|e_{d_a}(s)\right| = \displaystyle\lim_{s\to0}s \left|y_{d_a}(s)\right| = \displaystyle\lim_{s\to0}s \left| S(s)G_p(s)d_a(s) \right| = \nonumber \\
-		&= \displaystyle\lim_{s\to0} 	\left|s^{\nu+p+1}S^*(s)G_p(s)\dfrac{D_{a0}}{s^{h+1}}\right| = \displaystyle\lim_{s\to0} \left|s^{\nu+1}S^*(s)K_p\dfrac{D_{a0}}{s^{h+1}}\right| =
+		&= \displaystyle\lim_{s\to0} 	\left|s^{\nu+p+1}S^*(s)G_p(s)\dfrac{h!D_{a0}}{s^{h+1}}\right| = \displaystyle\lim_{s\to0} \left|s^{\nu+1}S^*(s)K_p\dfrac{h!D_{a0}}{s^{h+1}}\right| =
 		\begin{cases}
 			0, & \text{if } \nu>h \\
-			\left|S^*(0)K_pD_{a0}\right|, & \text{if } \nu = h
+			\left|S^*(0)K_ph!D_{a0}\right|, & \text{if } \nu = h
 		\end{cases}
 	\end{align}
 	We then obtain two cases as before:
@@ -95,7 +95,7 @@
 		\item[$\bullet$] case $\rho_a=0 \implies S(s)$ must have a zero at $s=0$ with multiplicity greater than $h \implies$ We have no constraint on $\left|S^*(0)\right| $ 
 		\item[$\bullet$] case $\rho_a>0 \implies S(s)$ must have a zero at $s=0$ with multiplicity $h \implies$ We have the following constraint:
 		\begin{equation}
-			\left|S^*(0)\right| \leq \dfrac{\rho_a}{K_pD_{a0}}	
+			\left|S^*(0)\right| \leq \dfrac{\rho_a}{K_ph!D_{a0}}	
 		\end{equation}
 	\end{enumerate}
 	
@@ -103,10 +103,10 @@
 	Applying the \textbf{final value theorem} leads to:
 	\begin{align}
 		\left| e_{d_p}^\infty \right| &= \displaystyle\lim_{t\to\infty} 	\left|e_{d_p}(t)\right| = \displaystyle\lim_{s\to0}s \left|e_{d_p}(s)\right| = \displaystyle\lim_{s\to0}s \left|y_{d_p}(s)\right| = \displaystyle\lim_{s\to0}s \left| S(s)d_p(s) \right| = \nonumber \\
-		&= \displaystyle\lim_{s\to0}	\left|s^{\nu+p+1}S^*(s)\dfrac{D_{p0}}{s^{h+1}}\right| =
+		&= \displaystyle\lim_{s\to0}	\left|s^{\nu+p+1}S^*(s)\dfrac{h!D_{p0}}{s^{h+1}}\right| =
 		\begin{cases}
 			0, & \text{if } \nu+p>h \\
-			\left|S^*(0)D_{p0}\right|, & \text{if } \nu+p = h
+			\left|S^*(0)h!D_{p0}\right|, & \text{if } \nu+p = h
 		\end{cases}
 	\end{align}
 	We then obtain two cases as before:
@@ -114,7 +114,7 @@
 		\item[$\bullet$] case $\rho_p=0 \implies S(s)$ must have a zero at $s=0$ with multiplicity greater than $h \implies$ We have no constraint on $\left|S^*(0)\right| $ 
 		\item[$\bullet$] case $\rho_p>0 \implies S(s)$ must have a zero at $s=0$ with multiplicity $h \implies$ We have the following constraint:
 		\begin{equation}
-			\left|S^*(0)\right| \leq \dfrac{\rho_p}{D_{p0}}	
+			\left|S^*(0)\right| \leq \dfrac{\rho_p}{h!D_{p0}}	
 		\end{equation}
 	\end{enumerate}
 	
