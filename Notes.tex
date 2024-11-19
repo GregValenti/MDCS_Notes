@@ -6,6 +6,7 @@
 \numberwithin{equation}{subsection}
 \usepackage{float}
 \usepackage{bm}
+\usepackage{wrapfig}
 
 \title{
 	\textbf{\huge{Modern Design of Control Systems}}\\
@@ -49,7 +50,8 @@
 		\item[$\bullet$] $\displaystyle \zeta = \frac{\left| \log (\hat{s}) \right|}{\sqrt{\pi^2 + \log^2 (\hat{s})}} \hfill (2.0.2)$
 		\item[$\bullet$] $\displaystyle \omega_{n,tr} = \frac{1}{t_r\sqrt{1-\zeta^2}} \cdot (\pi - acos(\zeta)) \quad; \quad
 		\omega_{n,t,s\alpha \%} = \frac{\log(\frac{100}{\alpha})}{t_{s,\alpha \%}\zeta} \hfill (2.0.3)$
-		\item[$\bullet$] $\displaystyle T_p = \frac{1}{2\zeta \sqrt{1-\zeta^2}} \quad; \quad S_p = \frac{2\zeta \sqrt{2+4\zeta^2+2\sqrt{1+8\zeta^2}}}{\sqrt{1+8\zeta^2}+4\zeta^2-1} \hfill (2.0.4)$
+		\item[$\bullet$] $\displaystyle \omega_c = \omega_n \sqrt{\sqrt{1+4\zeta^4}-2\zeta^2} \hfill (2.0.4)$
+		\item[$\bullet$] $\displaystyle T_p = \frac{1}{2\zeta \sqrt{1-\zeta^2}} \quad; \quad S_p = \frac{2\zeta \sqrt{2+4\zeta^2+2\sqrt{1+8\zeta^2}}}{\sqrt{1+8\zeta^2}+4\zeta^2-1} \hfill (2.0.5)$
 	\end{enumerate}
 	
 	\section{Steady-state Response to Polynomial Reference Inputs}
@@ -369,6 +371,14 @@
 			$M_{im}$ & $\left\lVert W_uS_n \right\rVert_\infty < 1$ \\ \hline
 		\end{tabular}
 	\end{center}
+	In other words, we have to guarantee that the uncertainty does not change the number of encirclements of the point $-1$ in the Nyquist plot of the loop function:
+	
+	\begin{figure}[H] % Use [H] to fix the position
+		\centering
+		\includegraphics[width=0.6\textwidth]{images/robust_stability_proof.png}
+		\caption{Nyquist Plot for Robust Stability Visualization}
+		\label{fig:image8}
+	\end{figure}
 	
 	\subsection{Nominal Performance}
 	The nominal performance conditions, derived previously in subsection 6.1, are requirements affecting the sensitivity and complementary sensitivity functions as follows:
@@ -379,18 +389,157 @@
 	\begin{equation}
 		\left\lVert W_TT_n \right\rVert_\infty < 1 
 	\end{equation}
+	If we use the Nyquist Plot as before for visualization, the concept is very similar, but the "uncertainty disk" this time is centered around $-1$.
+	
+	\begin{figure}[H] % Use [H] to fix the position
+		\centering
+		\includegraphics[width=0.6\textwidth]{images/nominal_performance_proof.png}
+		\caption{Nyquist Plot for Nominal Performance Visualization}
+		\label{fig:image9}
+	\end{figure}
 	
 	\subsection{Robust Performance}
 	The feedback system guarantees \textbf{robust performance} if and only if performance requirements are satisfied for each $G_p$ which belongs to the given uncertainty set.
-	Considering the case in which performance requirements affect only the sensitivity function and uncertainty is described by means of a multiplicative uncertainty model set, the following condition must be satisfied:
+	Considering the case in which performance requirements affect only the sensitivity function and uncertainty is described by means of a multiplicative uncertainty model set, the following condition must be satisfied (restricted to the case of $W_T = 0$):
 	
 	\begin{equation}
 		\left\lVert \left| W_SS_n \right| + \left| W_uT_n \right | \right\rVert_\infty < 1
 	\end{equation}
+	The Nyquist Plot below allows for an easy visualization of the concept of Robust Performance, which is satisfied if and only if the two "uncertainty disks" do not overlap.
+	
+	\begin{figure}[H] % Use [H] to fix the position
+		\centering
+		\includegraphics[width=0.6\textwidth]{images/RS_NP_proof.png}
+		\caption{Nyquist Plot for Robust Performance Visualization}
+		\label{fig:image10}
+	\end{figure}
 	
 	\section{$\bm{H_\infty}$ Design for Robust Control}
+	\subsection{Problem Definition}
+	Given definition 6.1.2 for SISO LTI systems, the $H_\infty$ norm minimization approach, called $H_\infty$ control, refers to a general formulation of the control problem which is based on the following block diagram representation of a general feedback system:
+	
+	\begin{figure}[H]
+		\centering
+		\begin{minipage}{0.5\textwidth}
+			\begin{enumerate}
+				\item[$\bullet$] $\bm{M}$ is the \textbf{generalized plant}
+				\item[$\bullet$] $\bm{G_c}$ is the controller
+				\item[$\bullet$] $\bm{u}$ are the control inputs
+				\item[$\bullet$] $\bm{v}$ are the controller inputs
+				\item[$\bullet$] $\bm{w}$ are the external inputs
+				\item[$\bullet$] $\bm{z}$ are the external outputs
+			\end{enumerate}
+		\end{minipage}%
+		\begin{minipage}{0.3\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{images/H_inf_feedback_CS.png}
+			\caption{$H_\infty$ Feedback Control System Block Diagram.}
+			\label{fig:image11}
+		\end{minipage}
+	\end{figure}
+	The external inputs and output signals of the generalized plant are not necessarily physical variables of the control system and must be carefully selected in order to take into account the stability and performance requirements of the considered control problem.
+	
+	\subsection{Controller Design}
+	In the $H_\infty$ design, the controller is obtained by solving the following optimization problem:
+	\begin{equation}
+		G_c(s) = \arg\min_{G_c \in G_c^{stab}} \left\lVert T_{wz}(s) \right\rVert_\infty 
+	\end{equation}
+	where $G_c^{stab}$ is the class of all the controllers which provide internal stability of the nominal feedback system, and $T_{wz}$ is the closed loop transfer function between the input $w$ and the output $z$.\\
+	Therefore, the design of the controller is performed in three steps:
+	
+	\begin{enumerate}
+		\item[$\bullet$] select the transfer function $T_{wz}$
+		\item[$\bullet$] build the generalized plant $M$ corresponding to the selected $T_{wz}$.
+		\item[$\bullet$] compute $G_c(s)$ by solving 9.2.1
+	\end{enumerate}
+	
+	\subsubsection{Generalized Plant for Robust Stability}
+	Let's consider the problem of designing a controller $G_c$ to robustly stabilize an uncertain system described by means of the unstructured multiplicative model set.\\
+	The condition for robust stability is 8.1.1, and a controller that satisfies this condition can be found by choosing the following transfer function $T_{wz}$:
+	
+	\begin{equation}
+		T_{wz}(s) = W_2T_n
+	\end{equation}
+	where $W_2(s) = W_u(s)$.
+	
+	\subsubsection{Generalized Plant for Nominal Performance}
+	Let's consider the problem of designing a controller $G_c$ to satisfy the nominal performance conditions.\\
+	The conditions for nominal performance are 8.2.1 and 8.2.2, and a controller that satisfies them can be found by choosing the following transfer function $T_{wz}$ as a \textbf{stack} of two transfer functions:
+	
+	\begin{equation}
+		T_{wz}(s) = 
+		\begin{bmatrix}
+			W_1 S_n \\
+			W_2 T_n
+		\end{bmatrix}
+	\end{equation}
+	where $W_1(s) = W_S(s)$ and $W_2(s) = W_T(s)$.
+	
+	\subsubsection{Generalized Plant for Robust Stability and Nominal Performance}
+	Finally, let's consider the problem of designing a controller $G_c$ that satisfies both conditions.\\
+	Since the complementary sensitivity function must satisfy the following two frequency domain constraints:
+	\begin{equation}
+		\left| T_n(j\omega) \right| \leq \left| W_T^{-1}(j\omega) \right| \quad , \quad \left| T_n(j\omega) \right| \leq \left| W_u^{-1}(j\omega) \right| \quad \forall\omega
+	\end{equation}
+	$T_{wz}$ can be chosen as in 9.2.3, where in this case $W_1(s) = W_S(s)$ and $W_2(s)$ is such that for each $\omega$:
+	\begin{equation}
+		\left| W_2(j\omega) \right| = \max \left( \left| W_u(j\omega) \right| , \left| W_T(j\omega) \right| \right)
+	\end{equation}
+	
+	For better visualization assume, without loss of generality, that $G_a=G_s=G_f=1$.\\
+	The generalized plant $M$ corresponding to the selected transfer function $T_{wz}$ is the following:
+	
+	\begin{figure}[H] % Use [H] to fix the position
+		\centering
+		\includegraphics[width=0.6\textwidth]{images/generalized_plant.png}
+		\caption{Generalized Plant Block Diagram.}
+		\label{fig:image12}
+	\end{figure}
+	
+	Control problems involving constraints on the $H_\infty$ norm on more than one closed loop transfer functions are called \textbf{mixed sensitivity problems}.\\
+	The controller design problem obtained by applying the "stacking procedure" to a mixed sensitivity problem is referred to as a \textbf{stacked mixed sensitivity problem}.
+	
+	\subsection{LMI Optimization Approach}
+	As previously stated, the $H_\infty$ controller is designed by solving equation 9.2.1.\\
+	\vspace{2pt}
+	Among the approaches proposed in the literature which solve such an optimization problem, this document will present one based on the solution of a suitable constrained optimization problem, where the constraints are in the form of linear matrix inequalities (LMI).\\
+	\vspace{2pt}
+	The LMI approach is based on a state-space description of the generalized plant M:
+	
+	\begin{figure}[H]
+		\begin{minipage}{0.3\textwidth}
+			\centering
+			\includegraphics[width=\linewidth]{images/generalized_plant_small.png}
+			\label{fig:image13}
+		\end{minipage}
+		\centering
+		\begin{minipage}{0.5\textwidth}
+			\vspace{-20pt}
+			\begin{equation}
+				\left\{
+				\begin{aligned}
+					\dot{x_M} &= Ax_M + B_1w + B_2u \\
+					z &= C_1x_M + D_{11}w + D_{12}u \\
+					v &= C_2x_M + D_{21}w + D_{22}u
+				\end{aligned}
+				\right.
+			\end{equation}
+		\end{minipage}
+	\end{figure}
+	where $\bm{X_M}$ \textbf{is the state of the generalized plant.} \\
+	\vspace{2pt}
+	The LMI optimization problem can be solved under the following assumptions:
+	\begin{enumerate}
+		\item[$\bullet$] The matrix triplet $(A,B_2,C_2)$ is stabilizable and detectable.
+		\item[$\bullet$] $D_{22} = 0$ 
+	\end{enumerate}
+	
+	\subsubsection{Internal stability of the generalized plant $\bm{M}$}
+	Considering the mixed sensitivity problem, the generalized plant M can be internally stabilized by an LTI controller $G_c$ having input v and output u \textbf{if and only if} $W_1$ and $W_2$ are stable transfer functions.
 	
 	
 	
 	
+	
+
 \end{document}
