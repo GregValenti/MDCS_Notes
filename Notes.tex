@@ -502,7 +502,7 @@
 	\subsection{LMI Optimization Approach}
 	As previously stated, the $H_\infty$ controller is designed by solving equation 9.2.1.\\
 	\vspace{2pt}
-	Among the approaches proposed in the literature which solve such an optimization problem, this document will present one based on the solution of a suitable constrained optimization problem, where the constraints are in the form of linear matrix inequalities (LMI).\\
+	Among the approaches proposed in the literature which solve such an optimization problem, this document will present one based on the solution of a suitably constrained optimization problem, where the constraints are in the form of linear matrix inequalities (LMI).\\
 	\vspace{2pt}
 	The LMI approach is based on a state-space description of the generalized plant M:
 	
@@ -537,9 +537,14 @@
 	\subsubsection{Internal stability of the generalized plant $\bm{M}$}
 	Considering the mixed sensitivity problem, the generalized plant M can be internally stabilized by an LTI controller $G_c$ having input v and output u \textbf{if and only if} $W_1$ and $W_2$ are stable transfer functions.
 	
+	\vspace{2pt}
+	Now, assume that the performance requirements are such that the weighting function $W_1$ has $\nu+p$ poles at $s=0$. In order to satisfy assumption $A_1$ we replace $W_1$ in the generalized plant $M$ with a new weighting function $W_1^*$ obtained as follows:
 	
-	
-	
-	
+	\begin{equation}
+		W_1^*(s) = W_1 \dfrac{s^{\nu+p}}{(s+\lambda^*)^{\nu+p}}
+	\end{equation}
+	where $\lambda^* > 0$, and $s=-\lambda^*$ is a low frequency pole, for which a reasonable choice is $\lambda^* \leq 0.01\omega_c$.\\
+	The controller obtained with such a modified weighting function has, if any, at most $\nu+p$ poles at about $s=-\lambda^*$. Each pole at about $s=-\lambda^*$ in the controller must be replaced with a pole at $s=0$.
+		
 
 \end{document}
