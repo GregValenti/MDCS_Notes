@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[a4paper,10pt,titlepage]{article}
 \usepackage{graphicx} % Required for inserting images
 \usepackage[margin=2cm]{geometry} % Adjust the margins
 \usepackage{amsmath}
@@ -7,18 +7,27 @@
 \usepackage{float}
 \usepackage{bm}
 
-\title{MDCS Notes}
-\author{Gregorio Valenti}
-\date{}
+\title{
+	\textbf{\huge{Modern Design of Control Systems}}\\
+	\textit{Notes and Summary}}
 
+\author{Gregorio Valenti}
+
+\date{\textit{Polytechnic of Turin}, September 2024 - February 2025}
 
 \begin{document}
+	\maketitle
 
 	\section{Feedback Control System Definition}
 	\hspace{1cm}
 	For this course, we will consider the model below to represent the system under study:
 	
-	\includegraphics[scale=1]{images/feedback_loop_description.png}
+	\begin{figure}[H] % Use [H] to fix the position
+		\centering
+		\includegraphics[scale=1]{images/feedback_loop_description.png}
+		\caption{Feedback Control System}
+		\label{fig:image1}
+	\end{figure}
 
 	With the following characteristics:
 	\begin{enumerate}
@@ -158,7 +167,7 @@
 		\item[$\bullet$] \textbf{Butterworth polynomials} can be used either as denominator or numerator of the approximating rational function to effectively retain constraints on different frequency ranges.
 	\end{enumerate}
 	\begin{table}[H] % Use [H] to fix position
-		\begin{minipage}{0.45\textwidth} % Adjust width as needed
+		\begin{minipage}{0.52\textwidth} % Adjust width as needed
 			\centering
 			\begin{tabular}{|c|c|}
 				\hline
@@ -195,8 +204,9 @@
 		% First minipage for the first image
 		\begin{minipage}{0.45\textwidth} % Adjust the width as needed
 			\centering
-			\includegraphics[width=\linewidth]{images/Approximation_W_S.png} % Replace with your image file
-			\label{fig:image1}
+			\includegraphics[width=\linewidth]{images/Approximation_W_S.png}
+			\caption{Weighting Function $W_S^{-1}$}
+			\label{fig:image2}
 		\end{minipage}
 		\hfill % Adds horizontal space between the images
 		% Vertical line
@@ -206,8 +216,9 @@
 		\begin{minipage}{0.45\textwidth} % Adjust the width as needed
 			\centering
 			\vspace{0pt}
-			\includegraphics[width=1.135\linewidth]{images/Approximation_W_T.png} % Replace with your image file
-			\label{fig:image2}
+			\includegraphics[width=1.135\linewidth]{images/Approximation_W_T.png}
+			\caption{Weighting Function $W_T^{-1}$}
+			\label{fig:image3}
 		\end{minipage}
 	\end{figure}
 	
@@ -260,9 +271,12 @@
 	
 	Below is an example of the frequency response of $W_u(j\omega)$ for an additive uncertainty model set:
 	
-	\centering
-	\includegraphics[width=0.6\textwidth]{images/additive_uncertainty.png}
-	\label{fig:image3}
+	\begin{figure}[H] % Use [H] to fix the position
+		\centering
+		\includegraphics[width=0.6\textwidth]{images/additive_uncertainty.png}
+		\caption{Weighting Function $W_u$ considering $M_a$}
+		\label{fig:image6}
+	\end{figure}
 	
 	\raggedright
 	\subsubsection{Multiplicative Uncertainty}
@@ -281,9 +295,12 @@
 	
 	Below is an example of the frequency response of $W_u(j\omega)$ for a multiplicative uncertainty model set:
 	
-	\centering
-	\includegraphics[width=0.68\textwidth]{images/multiplicative_uncertainty.png}
-	\label{fig:image4}
+	\begin{figure}[H] % Use [H] to fix the position
+		\centering
+		\includegraphics[width=0.68\textwidth]{images/multiplicative_uncertainty.png}
+		\caption{Weighting Function $W_u$ considering $M_m$}
+		\label{fig:image7}
+	\end{figure}
 	
 	\raggedright
 	Now we consider the problem of properly selecting the \textbf{nominal model} $\bm{G_{pn}}$ in order to \textbf{minimize} the size $W_u$ of the unstructured uncertainty of the given model:
@@ -328,7 +345,51 @@
 	An important remark is that \textbf{unstructured uncertainty model sets can only provide a conservative description of parametric uncertainties} since, as shown in the above example, a complex function $\Delta(s)$ is used to account for the source of uncertainty, which is a real number.
 	The unstructured uncertainty model set describes, at each frequency $\omega$, the uncertainty as a disk of radius $\left| W_u(j\omega)L_n(j\omega) \right|$.
 	
-	\section{Robust Stability}
+	\section{Unstructured Uncertainty Modelling and Robustness}
+	The aim is to study the stability of a feedback control system under the assumption that $G_p$ is an uncertain system described by a given uncertainty model set. The following discussion will consider a multiplicative uncertainty model set $M_m$.
+	
+	\subsection{Robust Stability}
+	The feedback control system displayed in Figure 1 is \textbf{robustly stable} if and only if it is internally stable for each $G_p$ which belongs to $M_m$.
+	As a result, the following condition on the weighting function $W_u$ must be satisfied:
+	
+	\begin{equation}
+		\left\lVert W_uT_n \right\rVert_\infty < 1
+	\end{equation} 
+	
+	where $T_n$ is the \textbf{nominal complementary sensitivity function}.
+	Robust stability conditions for every described uncertainty model set are shown in the table below:
+	\begin{center}
+		\vspace{2pt}
+		\begin{tabular}{|c|c|}
+			\hline
+			\textbf{Uncertainty Model Set} & \textbf{Robust Stability Condition} \\ \hline
+			$M_m$ & $\left\lVert W_uT_n \right\rVert_\infty < 1$ \\ \hline
+			$M_a$ & $\left\lVert W_uG_cS_n \right\rVert_\infty < 1$ \\ \hline
+			$M_{ia}$ & $\left\lVert W_uG_{pn}S_n \right\rVert_\infty < 1$ \\ \hline
+			$M_{im}$ & $\left\lVert W_uS_n \right\rVert_\infty < 1$ \\ \hline
+		\end{tabular}
+	\end{center}
+	
+	\subsection{Nominal Performance}
+	The nominal performance conditions, derived previously in subsection 6.1, are requirements affecting the sensitivity and complementary sensitivity functions as follows:
+	
+	\begin{equation}
+		\left\lVert W_SS_n \right\rVert_\infty < 1 \iff \left| 1+L_n(j\omega) \right| > \left| W_S(j\omega) \right| \quad \forall\omega 
+	\end{equation}
+	\begin{equation}
+		\left\lVert W_TT_n \right\rVert_\infty < 1 
+	\end{equation}
+	
+	\subsection{Robust Performance}
+	The feedback system guarantees \textbf{robust performance} if and only if performance requirements are satisfied for each $G_p$ which belongs to the given uncertainty set.
+	Considering the case in which performance requirements affect only the sensitivity function and uncertainty is described by means of a multiplicative uncertainty model set, the following condition must be satisfied:
+	
+	\begin{equation}
+		\left\lVert \left| W_SS_n \right| + \left| W_uT_n \right | \right\rVert_\infty < 1
+	\end{equation}
+	
+	\section{$\bm{H_\infty}$ Design for Robust Control}
+	
 	
 	
 	
