@@ -530,8 +530,8 @@
 	\vspace{2pt}
 	The LMI optimization problem can be solved under the following assumptions:
 	\begin{enumerate}
-		\item[$\bullet$] The matrix triplet $(A,B_2,C_2)$ is stabilizable and detectable.
-		\item[$\bullet$] $D_{22} = 0$ 
+		\item[\textbf{A1.}] The matrix triplet $(A,B_2,C_2)$ is stabilizable and detectable.
+		\item[\textbf{A2.}] $D_{22} = 0$ 
 	\end{enumerate}
 	
 	\subsubsection{Internal stability of the generalized plant $\bm{M}$}
@@ -544,7 +544,64 @@
 		W_1^*(s) = W_1 \dfrac{s^{\nu+p}}{(s+\lambda^*)^{\nu+p}}
 	\end{equation}
 	where $\lambda^* > 0$, and $s=-\lambda^*$ is a low frequency pole, for which a reasonable choice is $\lambda^* \leq 0.01\omega_c$.\\
-	The controller obtained with such a modified weighting function has, if any, at most $\nu+p$ poles at about $s=-\lambda^*$. Each pole at about $s=-\lambda^*$ in the controller must be replaced with a pole at $s=0$.
+	The controller obtained with such a modified weighting function has, if any, at most $\nu+p$ poles at about $s=-\lambda^*$. Each pole at about $s=-\lambda^*$ in the controller must be replaced with a pole at $s=0$.\\
+	\vspace{2pt}
+	We consider now the transfer function $W_2$, which we choose as described in 9.2.5. This transfer function has a gain and two complex conjugate zeroes, therefore it is not proper.\\
+	We modify $W_2$ in one of the two following ways:
+	
+	\begin{equation}
+		W_2^*(s) = W_2 \left( 1+\dfrac{2\zeta}{\omega_a}s+\left(\dfrac{s}{\omega_a}\right)^2 \right)
+	\end{equation}
+	\begin{equation}
+		W_2^*(s) = W_2 \left( 1+\dfrac{s}{p} \right) \left( 1+\dfrac{s}{p} \right)
+	\end{equation}
+	where $\zeta$ and $\omega_a$ are the damping factor and the frequency of the complex conjugate poles of $W_T^{-1}$ respectively, when considering the first solution, while p is the frequency of a pole, chosen to cancel the complex conjugate zeros considering the second solution.\\
+	In conclusion, $W_2^*$ will be equal to $\dfrac{1}{T_p}$, where $T_p$ was defined in 2.0.5, thus the resulting modified weighting function will be proper.\\
+	\vspace{2pt}
+	On Matlab, the following command can be used twice to perform 9.3.4:
+	
+	\begin{equation}
+		M = \text{sderiv}(M,2,\left[ 1/p,1 \right]);
+	\end{equation}
+	
+	\subsubsection{Matlab Commands}
+	This subsections aims to list and illustrate the Matlab commands that should be used to perform the LMI optimization technique to obtain the $H_\infty$ controller.
+	\begin{enumerate}
+		\item[$\bullet$] $[A_m,B_m,C_m,D_m] = \text{linmod}('\text{generalized\_plant}');$ \\
+		Given a Simulink model of the generalized plant $M$ named $'\text{generalized\_plant.mdl}'$, \textbf{linmod} provides the matrices of the state-space description of M.
+		\item[$\bullet$] $M = \text{ltisys}(A_m,B_m,C_m,D_m);$\\
+		Given the matrices of the state-space realization of $M$, \textbf{ltisys} computes the generalized model $M$ in a specific form needed by the LMI Control Toolbox to solve the optimization problem.
+		\item[$\bullet$] $[gopt,G_{cmod}] = \text{hinflmi}(M,R,G,tol,options);$\\
+		Given the generalized plant $M$ obtained with the command \textbf{ltisys}, and the parameters listed and explained below, \textbf{hinflmi} provides the optimal value of $\gamma$ (gopt) and the controller $G_c$ in a specific compact form.
+		\begin{enumerate}
+			\item[-] \textbf{M} is the system matrix
+			\item[-] \textbf{R} is a 1x2 vector specifying the dimensions of D22.
+			\item[-] \textbf{G} is the user-specified target for the closed-loop performance. Set $G=0$ to compute $G_{opt}$, and set  $G=gamma$  to test whether the performance $gamma$ is achievable.
+			\item[-] \textbf{tol} is the relative accuracy required on $G_{opt}$. Default is $1e-2$.
+			\item[-] \textbf{options} is an optional 3-entry vector of control parameters for the numerical computations.
+		\end{enumerate}		
+		Our chosen values will be the following:\\
+		$[gopt,G_{cmod}] = \text{hinflmi}(M,\left[ 1,1 \right],0,0.01, \left[ 0,0,0 \right]);$
+		\item[$\bullet$] $[A_c,B_c,C_c,D_c] = \text{ltiss}(G_{cmod});$\\
+		Given $G_{cmod}$ computed by \textbf{hinflmi}, extracts the state-space matrices from the system
+		matrix representation of the LTI system.
+		\item[$\bullet$] $G_{cmod} = ss(A_c,B_c,C_c,D_c);$\\
+		Given the state-space matrices computed above, computes the transfer function $G_{cmod}$ of the controller.
+	\end{enumerate} 
+	
+	\subsubsection{Computation of the Final Controller Transfer Function}
+	The transfer function $G_{cmod}$ computed above will likely be of relatively high order, and some modifications must be performed in order to simplify the obtained controller:
+	
+	\begin{enumerate}
+		\item[$\bullet$] If the transfer function presents a zero and a pole at very low frequencies compared to the crossover frequency $\omega_c$, these elements can effectively \textbf{cancel} each other.
+		\item[$\bullet$] If the transfer function presents a high frequency pole relatively to $\omega_c$, such pole can be \textbf{removed} by multiplying for a suitably chosen zero.
+		\item[$\bullet$] Depending on the system type obtained from the translation of the requirements, a set number of low frequency poles will have to be \textbf{substituted} by poles at the origin.
+	\end{enumerate}
+	A general formula to be considered for the simplification of the obtained controller is presented below:
+	
+	\begin{equation}
+		G_c(s) = G_{cmod} \dfrac{s+p_{LF}}{s+z_{LF}} \left\{ 1+\dfrac{s}{p_{HF}} \right\} \dfrac{s+p_{VLF}}{s} 
+	\end{equation}
+	where $p_{LF}$ and $z_{LF}$ are a pole and a zero at low frequencies which will \textbf{cancel} each other, $p_{HF}$ is the high frequency pole to be \textbf{removed}, $p_{VLF}$ is a pole at very low frequencies to be \textbf{substituted} with a pole at the origin.
 		
-
 \end{document}
