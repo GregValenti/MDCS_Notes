@@ -550,10 +550,10 @@
 	We modify $W_2$ in one of the two following ways:
 	
 	\begin{equation}
-		W_2^*(s) = W_2 \left( 1+\dfrac{2\zeta}{\omega_a}s+\left(\dfrac{s}{\omega_a}\right)^2 \right)
+		W_2^*(s) =  \left( \dfrac{W_2}{1+\dfrac{2\zeta}{\omega_a}s+\left(\dfrac{s}{\omega_a}\right)^2} \right)
 	\end{equation}
 	\begin{equation}
-		W_2^*(s) = W_2 \left( 1+\dfrac{s}{p} \right) \left( 1+\dfrac{s}{p} \right)
+		W_2^*(s) = \left( \dfrac{W_2}{\left( 1+\dfrac{s}{p} \right) \left( 1+\dfrac{s}{p} \right)} \right)
 	\end{equation}
 	where $\zeta$ and $\omega_a$ are the damping factor and the frequency of the complex conjugate poles of $W_T^{-1}$ respectively, when considering the first solution, while p is the frequency of a pole, chosen to cancel the complex conjugate zeros considering the second solution.\\
 	In conclusion, $W_2^*$ will be equal to $\dfrac{1}{T_p}$, where $T_p$ was defined in 2.0.5, thus the resulting modified weighting function will be proper.\\
@@ -603,5 +603,6 @@
 		G_c(s) = G_{cmod} \dfrac{s+p_{LF}}{s+z_{LF}} \left\{ 1+\dfrac{s}{p_{HF}} \right\} \dfrac{s+p_{VLF}}{s} 
 	\end{equation}
 	where $p_{LF}$ and $z_{LF}$ are a pole and a zero at low frequencies which will \textbf{cancel} each other, $p_{HF}$ is the high frequency pole to be \textbf{removed}, $p_{VLF}$ is a pole at very low frequencies to be \textbf{substituted} with a pole at the origin.
+	
 		
 \end{document}
